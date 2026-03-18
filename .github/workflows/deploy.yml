@@ -48,7 +48,7 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
-          cd /home/vikas_pandey/ci-cdpipeline
+          cd /home/vikas_pandey/pipeline
           git pull origin main
           # Ensure pnpm and pm2 exist
           command -v pnpm >/dev/null 2>&1 || npm i -g pnpm
@@ -58,4 +58,4 @@ jobs:
           pnpm run build
           cd ../backend
           pnpm install
-          pm2 restart mern-pipeline || pm2 start src/server.js --name mern-pipeline
+          pm2 restart pipeline || pm2 start src/server.js --name pipeline
