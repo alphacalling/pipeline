@@ -121,145 +121,210 @@ function App() {
   const pendingCount = totalCount - completedCount;
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-5xl rounded-3xl shadow-2xl shadow-blue-900/60 p-6 md:p-8 space-y-6">
-        <header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="space-y-1">
-            <div className="inline-flex items-center gap-2">
-              <h1 className="text-2xl font-semibold tracking-tight">
-                MERN Pipeline CRUD
-              </h1>
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100 flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-5xl rounded-3xl bg-slate-900/80 border border-slate-700/50 backdrop-blur-xl shadow-2xl shadow-blue-950/40 p-6 md:p-10 space-y-8">
+        {/* Header */}
+        <header className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between pb-6 border-b border-slate-700/50">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-3">
+              <div className="flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-emerald-400 shadow-lg shadow-blue-500/25">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                  <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                  MERN Pipeline CRUD
+                </h1>
+              </div>
             </div>
-            <p className="text-xs md:text-sm text-slate-400">
+            <p className="text-sm text-slate-400 ml-[52px]">
               Manage your tasks with a React UI, Express API and MongoDB.
             </p>
           </div>
-          <div className="flex flex-col items-start justify-end gap-2 text-xs md:items-end">
-            <div className="inline-flex items-center gap-2 text-emerald-300">
-              <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgba(16,185,129,0.45)]" />
-              Live API
+          <div className="flex flex-col items-start gap-3 md:items-end">
+            <div className="inline-flex items-center gap-2 text-emerald-300 text-sm font-medium">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+              </span>
+              Live API Connected
             </div>
-            <div className="flex flex-wrap gap-1.5">
-              <span className="rounded-full bg-slate-800/80 px-2 py-0.5 text-[11px] text-slate-200">
-                Total: <span className="font-semibold">{totalCount}</span>
-              </span>
-              <span className="rounded-full bg-emerald-500/10 border border-emerald-400/60 px-2 py-0.5 text-[11px] text-emerald-200">
-                Completed:{" "}
-                <span className="font-semibold">{completedCount}</span>
-              </span>
-              <span className="rounded-full bg-amber-500/10 border border-amber-400/60 px-2 py-0.5 text-[11px] text-amber-200">
-                Pending: <span className="font-semibold">{pendingCount}</span>
-              </span>
+            <div className="flex flex-wrap gap-2">
+              <div className="flex items-center gap-1.5 rounded-lg bg-slate-800/80 border border-slate-600/50 px-3 py-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
+                </svg>
+                <span className="text-xs text-slate-300">Total</span>
+                <span className="text-xs font-bold text-slate-100">{totalCount}</span>
+              </div>
+              <div className="flex items-center gap-1.5 rounded-lg bg-emerald-500/10 border border-emerald-400/40 px-3 py-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="text-xs text-emerald-300">Done</span>
+                <span className="text-xs font-bold text-emerald-200">{completedCount}</span>
+              </div>
+              <div className="flex items-center gap-1.5 rounded-lg bg-amber-500/10 border border-amber-400/40 px-3 py-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.828a1 1 0 101.415-1.414L11 9.586V6z" clipRule="evenodd" />
+                </svg>
+                <span className="text-xs text-amber-300">Pending</span>
+                <span className="text-xs font-bold text-amber-200">{pendingCount}</span>
+              </div>
             </div>
           </div>
         </header>
 
-        <div className="grid md:grid-cols-[1.05fr_minmax(0,1fr)] gap-4 md:gap-6">
-          {/* Form */}
-          <section className="rounded-2xl border border-slate-700/80 bg-slate-900/60 p-4 md:p-5 space-y-4">
+        <div className="grid md:grid-cols-[1.1fr_1fr] gap-6 md:gap-8">
+          {/* Form Section */}
+          <section className="rounded-2xl border border-slate-700/60 bg-gradient-to-b from-slate-800/50 to-slate-900/50 p-5 md:p-6 space-y-5">
             <div className="flex items-center justify-between gap-2">
-              <div>
-                <h2 className="text-sm font-medium">
-                  {activeId ? "Edit item" : "Add new item"}
+              <div className="flex items-center gap-2.5">
+                <div className={`flex items-center justify-center h-8 w-8 rounded-lg ${activeId ? 'bg-amber-500/15 text-amber-400' : 'bg-blue-500/15 text-blue-400'}`}>
+                  {activeId ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                    </svg>
+                  )}
+                </div>
+                <h2 className="text-base font-semibold">
+                  {activeId ? "Edit Item" : "Add New Item"}
                 </h2>
-                
               </div>
-              <span className="text-[11px] px-2 py-0.5 rounded-full border border-emerald-400/50 text-emerald-200 bg-emerald-500/10">
-                Form
+              <span className={`text-[11px] px-2.5 py-1 rounded-full font-medium ${activeId ? 'border border-amber-400/50 text-amber-200 bg-amber-500/10' : 'border border-blue-400/50 text-blue-200 bg-blue-500/10'}`}>
+                {activeId ? "Editing" : "Creating"}
               </span>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                  Title <span className="text-rose-300">*</span>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                  Title <span className="text-rose-400">*</span>
                 </label>
                 <input
                   name="title"
                   value={form.title}
                   onChange={handleChange}
                   placeholder="Ship the next feature..."
-                  className="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm outline-none ring-0 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-xl border border-slate-600/80 bg-slate-900/80 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none transition-all duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 hover:border-slate-500"
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <div className="space-y-1.5">
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
                   Description
                 </label>
                 <textarea
                   name="description"
                   value={form.description}
                   onChange={handleChange}
-                  rows={3}
-                  placeholder="Add a bit more context for your task."
-                  className="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm outline-none ring-0 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 resize-y"
+                  rows={4}
+                  placeholder="Add a bit more context for your task..."
+                  className="w-full rounded-xl border border-slate-600/80 bg-slate-900/80 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 outline-none transition-all duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 hover:border-slate-500 resize-none"
                 />
               </div>
 
-              <div className="flex items-center justify-between text-[11px] text-slate-400">
-                <span className="px-2 py-0.5 rounded-full border border-slate-600/80">
-                  Mode: {activeId ? "Edit existing" : "Create new"}
-                </span>
-                {saving && (
-                  <div className="inline-flex items-center gap-1.5 text-slate-200">
-                    <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
-                    Saving…
-                  </div>
-                )}
-              </div>
+              {saving && (
+                <div className="flex items-center gap-2 text-xs text-blue-300">
+                  <svg className="animate-spin h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Saving changes…
+                </div>
+              )}
 
-              <div className="flex justify-end gap-2 pt-1">
+              <div className="flex items-center justify-end gap-3 pt-2">
                 {activeId && (
                   <button
                     type="button"
                     onClick={resetForm}
-                    className="inline-flex items-center rounded-full border border-slate-600 bg-slate-900/60 px-3 py-1.5 text-xs font-medium text-slate-100 hover:bg-slate-800/90 cursor-pointer"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-slate-600 bg-slate-800/80 px-4 py-2 text-xs font-semibold text-slate-200 hover:bg-slate-700/80 hover:border-slate-500 transition-all duration-200 cursor-pointer"
                   >
-                    Clear
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                    Cancel
                   </button>
                 )}
                 <button
                   type="submit"
                   disabled={saving}
-                  className="inline-flex items-center rounded-full bg-gradient-to-r from-blue-500 to-emerald-400 px-4 py-1.5 text-xs font-semibold text-slate-950 shadow-lg shadow-blue-900/50 hover:from-blue-400 hover:to-emerald-300 disabled:opacity-70 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-blue-500 to-emerald-400 px-5 py-2 text-xs font-bold text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:from-blue-400 hover:to-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer"
                 >
-                  {activeId ? "Update item" : "Add item"}
+                  {activeId ? (
+                    <>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      Update Item
+                    </>
+                  ) : (
+                    <>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                      </svg>
+                      Add Item
+                    </>
+                  )}
                 </button>
               </div>
             </form>
 
             {error && (
-              <p className="text-xs text-rose-300 bg-rose-950/40 border border-rose-500/40 rounded-xl px-3 py-2 mt-1">
+              <div className="flex items-center gap-2 text-xs text-rose-300 bg-rose-950/40 border border-rose-500/30 rounded-xl px-4 py-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
                 {error}
-              </p>
+              </div>
             )}
           </section>
 
-          {/* List */}
-          <section className="rounded-2xl border border-slate-700/80 bg-slate-900/60 p-4 md:p-5 space-y-3">
+          {/* List Section */}
+          <section className="rounded-2xl border border-slate-700/60 bg-gradient-to-b from-slate-800/50 to-slate-900/50 p-5 md:p-6 space-y-4">
             <div className="flex items-center justify-between gap-2">
-              <div>
-                <h2 className="text-sm font-medium">Items</h2>
-                <p className="text-[11px] text-slate-400 mt-0.5">
-                  Tap a row to edit. Use actions on the right to complete or
-                  delete.
-                </p>
+              <div className="flex items-center gap-2.5">
+                <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-sky-500/15 text-sky-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 className="text-base font-semibold">Items</h2>
+                  <p className="text-[11px] text-slate-400">
+                    Tap a row to edit • Actions on right
+                  </p>
+                </div>
               </div>
-              <span className="text-[11px] px-2 py-0.5 rounded-full border border-sky-400/60 text-sky-200 bg-sky-500/10">
+              <span className="text-[11px] px-2.5 py-1 rounded-full border border-sky-400/50 text-sky-200 bg-sky-500/10 font-medium">
                 MongoDB
               </span>
             </div>
 
-            <div className="space-y-2 mt-2 max-h-[360px] overflow-y-auto pr-1">
+            <div className="space-y-2.5 max-h-[400px] overflow-y-auto pr-1 scrollbar-thin">
               {loading && (
-                <div className="text-xs text-slate-400 py-4 text-center">
-                  Loading items…
+                <div className="flex flex-col items-center justify-center py-12 text-slate-400">
+                  <svg className="animate-spin h-6 w-6 mb-3 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <span className="text-xs">Loading items…</span>
                 </div>
               )}
               {!loading && items.length === 0 && (
-                <div className="text-xs text-slate-400 py-4 text-center border border-dashed border-slate-700 rounded-xl">
-                  No items yet. Create your first task on the left.
+                <div className="flex flex-col items-center justify-center py-12 text-slate-400 border border-dashed border-slate-700 rounded-xl">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mb-3 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                  </svg>
+                  <p className="text-sm font-medium text-slate-500">No items yet</p>
+                  <p className="text-xs text-slate-600 mt-1">Create your first task using the form</p>
                 </div>
               )}
               {!loading &&
@@ -274,69 +339,80 @@ function App() {
                   return (
                     <div
                       key={item._id}
-                      type="button"
                       onClick={() => handleSelect(item)}
-                      className={`w-full text-left rounded-xl border px-3 py-2.5 flex gap-3 items-start transition ${
+                      className={`group w-full text-left rounded-xl border px-4 py-3.5 flex gap-3 items-start transition-all duration-200 cursor-pointer ${
                         active
-                          ? "border-emerald-400/80 bg-emerald-500/10"
-                          : "border-slate-700 bg-slate-900/70 hover:border-blue-400/80 hover:bg-slate-900"
+                          ? "border-emerald-400/60 bg-emerald-500/10 shadow-md shadow-emerald-500/10"
+                          : "border-slate-700/80 bg-slate-900/50 hover:border-blue-400/60 hover:bg-slate-800/70 hover:shadow-md hover:shadow-blue-500/5"
                       }`}
                     >
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <p
-                            className={`text-sm font-medium truncate ${
-                              item.completed
-                                ? "line-through text-slate-400"
-                                : "text-slate-50"
-                            }`}
-                          >
-                            {item.title}
-                          </p>
+                      {/* Checkbox indicator */}
+                      <div className="flex-shrink-0 mt-0.5">
+                        <div className={`flex items-center justify-center h-5 w-5 rounded-md border-2 transition-all duration-200 ${
+                          item.completed
+                            ? 'bg-emerald-500 border-emerald-500'
+                            : 'border-slate-500 group-hover:border-blue-400'
+                        }`}>
+                          {item.completed && (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          )}
                         </div>
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <p
+                          className={`text-sm font-semibold truncate ${
+                            item.completed
+                              ? "line-through text-slate-500"
+                              : "text-slate-100"
+                          }`}
+                        >
+                          {item.title}
+                        </p>
                         {item.description && (
-                          <p className="mt-0.5 text-xs text-slate-400 line-clamp-2">
+                          <p className="mt-1 text-xs text-slate-400 line-clamp-2 leading-relaxed">
                             {item.description}
                           </p>
                         )}
-                        <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                        <div className="mt-2 flex flex-wrap items-center gap-2">
                           <span
-                            className={`text-[10px] px-2 py-0.5 rounded-full border ${
+                            className={`inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-md font-medium ${
                               item.completed
-                                ? "border-emerald-400/80 text-emerald-200 bg-emerald-500/10"
-                                : "border-slate-500/80 text-slate-200 bg-slate-800/80"
+                                ? "text-emerald-300 bg-emerald-500/15"
+                                : "text-amber-300 bg-amber-500/15"
                             }`}
                           >
+                            <span className={`h-1.5 w-1.5 rounded-full ${item.completed ? 'bg-emerald-400' : 'bg-amber-400'}`} />
                             {item.completed ? "Completed" : "Pending"}
                           </span>
                           {created && (
-                            <span className="text-[10px] text-slate-400">
-                              Created{" "}
-                              {created.toLocaleDateString()}{" "}
-                              {created.toLocaleTimeString()}
-                            </span>
-                          )}
-                          {updated && (
                             <span className="text-[10px] text-slate-500">
-                              • Updated{" "}
-                              {updated.toLocaleDateString()}{" "}
-                              {updated.toLocaleTimeString()}
+                              {created.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                              {" · "}
+                              {created.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="flex flex-col gap-1.5">
+
+                      <div className="flex flex-col gap-2 flex-shrink-0">
                         <button
                           type="button"
                           onClick={(e) => handleToggle(item, e)}
-                          className="text-[11px] rounded-full border border-slate-600 bg-slate-900/80 px-2.5 py-1 text-slate-100 hover:bg-slate-800/90 cursor-pointer"
+                          className={`text-[11px] rounded-lg border px-3 py-1.5 font-medium transition-all duration-200 cursor-pointer ${
+                            item.completed
+                              ? "border-amber-500/50 bg-amber-500/10 text-amber-200 hover:bg-amber-500/20"
+                              : "border-emerald-500/50 bg-emerald-500/10 text-emerald-200 hover:bg-emerald-500/20"
+                          }`}
                         >
-                          {item.completed ? "Reopen" : "Done"}
+                          {item.completed ? "Reopen" : "✓ Done"}
                         </button>
                         <button
                           type="button"
                           onClick={(e) => handleDelete(item._id, e)}
-                          className="text-[11px] rounded-full border border-rose-500/70 bg-rose-500/10 px-2.5 py-1 text-rose-100 hover:bg-rose-500/20 cursor-pointer"
+                          className="text-[11px] rounded-lg border border-rose-500/40 bg-rose-500/10 px-3 py-1.5 text-rose-300 font-medium hover:bg-rose-500/20 hover:border-rose-500/60 transition-all duration-200 cursor-pointer"
                         >
                           Delete
                         </button>
@@ -347,6 +423,19 @@ function App() {
             </div>
           </section>
         </div>
+
+        {/* Footer */}
+        <footer className="pt-4 border-t border-slate-700/50 flex items-center justify-between">
+          <p className="text-[11px] text-slate-500">
+            Built with React + Express + MongoDB
+          </p>
+          <div className="flex items-center gap-3">
+            <span className="text-[11px] text-slate-500 flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+              All systems operational
+            </span>
+          </div>
+        </footer>
       </div>
     </div>
   );
