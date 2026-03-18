@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MERN Pipeline CRUD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css"
+    />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: #0f172a;
+        color: #e5e7eb;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .app {
+        width: 100%;
+        max-width: 960px;
+        background: radial-gradient(circle at top left, #1e293b, #020617);
+        border-radius: 24px;
+        padding: 24px 28px 28px;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.3);
+      }
+      .app-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .app-title {
+        font-size: 24px;
+        font-weight: 650;
+        letter-spacing: 0.02em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .badge {
+        font-size: 11px;
+        border-radius: 999px;
+        padding: 3px 8px;
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.4);
+        color: #93c5fd;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .app-subtitle {
+        font-size: 13px;
+        color: #9ca3af;
+        margin-top: 2px;
+      }
+      .app-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+        gap: 20px;
+      }
+      @media (max-width: 800px) {
+        .app-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+      .card {
+        background: rgba(15, 23, 42, 0.92);
+        border-radius: 18px;
+        padding: 16px 16px 18px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+      }
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .card-title {
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .pill {
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: rgba(15, 118, 110, 0.1);
+        color: #6ee7b7;
+        border: 1px solid rgba(45, 212, 191, 0.5);
+      }
+      .field-label {
+        font-size: 12px;
+        color: #9ca3af;
+        margin-bottom: 4px;
+      }
+      .field-row {
+        display: flex;
+        gap: 10px;
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: 7px 9px;
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.55);
+        background: rgba(15, 23, 42, 0.9);
+        color: #e5e7eb;
+        font-size: 13px;
+        outline: none;
+        transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+      }
+      input:focus,
+      textarea:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.7);
+        background: #020617;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 70px;
+      }
+      .btn {
+        border-radius: 999px;
+        border: none;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 7px 14px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: transform 0.1s, box-shadow 0.1s, background 0.15s,
+          color 0.15s, border-color 0.15s;
+        white-space: nowrap;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #3b82f6, #22c55e);
+        color: #0b1120;
+        box-shadow: 0 12px 30px rgba(37, 99, 235, 0.4);
+      }
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 18px 40px rgba(37, 99, 235, 0.6);
+      }
+      .btn-ghost {
+        background: rgba(15, 23, 42, 0.6);
+        color: #e5e7eb;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+      }
+      .btn-ghost:hover {
+        background: rgba(30, 64, 175, 0.6);
+        border-color: rgba(96, 165, 250, 0.8);
+        color: #e5e7eb;
+      }
+      .btn-icon {
+        padding: 5px 9px;
+        border-radius: 999px;
+      }
+      .toolbar {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .list {
+        margin-top: 8px;
+      }
+      .list-empty {
+        font-size: 13px;
+        color: #9ca3af;
+        padding: 18px 12px 8px;
+        text-align: center;
+      }
+      .item-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 9px 10px;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: background 0.12s, border-color 0.12s, transform 0.07s;
+      }
+      .item-row:hover {
+        background: rgba(30, 64, 175, 0.35);
+        border-color: rgba(96, 165, 250, 0.8);
+        transform: translateY(-1px);
+      }
+      .item-row.active {
+        background: rgba(22, 163, 74, 0.15);
+        border-color: rgba(74, 222, 128, 0.9);
+      }
+      .item-main {
+        flex: 1;
+      }
+      .item-title {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .item-title.completed {
+        text-decoration: line-through;
+        color: #9ca3af;
+      }
+      .item-desc {
+        font-size: 12px;
+        color: #9ca3af;
+        margin-top: 3px;
+      }
+      .item-meta {
+        margin-top: 6px;
+        font-size: 11px;
+        color: #6b7280;
+        display: flex;
+        gap: 8px;
+      }
+      .item-tags {
+        display: flex;
+        gap: 6px;
+        margin-top: 4px;
+      }
+      .tag {
+        font-size: 10px;
+        padding: 2px 7px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        color: #d1d5db;
+      }
+      .tag-success {
+        border-color: rgba(52, 211, 153, 0.9);
+        color: #6ee7b7;
+      }
+      .tag-pending {
+        border-color: rgba(248, 250, 252, 0.4);
+        color: #e5e7eb;
+      }
+      .item-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-left: 6px;
+      }
+      .chip-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: 4px;
+        font-size: 11px;
+        color: #9ca3af;
+      }
+      .chip {
+        padding: 3px 7px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.6);
+      }
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: #22c55e;
+        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25);
+        margin-right: 4px;
+      }
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .error {
+        margin-top: 8px;
+        font-size: 12px;
+        color: #fecaca;
+      }
+      .loading {
+        font-size: 12px;
+        color: #e5e7eb;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .loading-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #3b82f6;
+        animation: pulse 1s ease-in-out infinite alternate;
+      }
+      @keyframes pulse {
+        from {
+          transform: scale(0.8);
+          opacity: 0.6;
+        }
+        to {
+          transform: scale(1.1);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script>
+      const { useState, useEffect } = React;
+
+      function App() {
+        const [items, setItems] = useState([]);
+        const [activeId, setActiveId] = useState(null);
+        const [form, setForm] = useState({
+          title: "",
+          description: "",
+          completed: false,
+        });
+        const [loading, setLoading] = useState(false);
+        const [saving, setSaving] = useState(false);
+        const [error, setError] = useState("");
+
+        useEffect(() => {
+          fetchItems();
+        }, []);
+
+        async function fetchItems() {
+          setLoading(true);
+          setError("");
+          try {
+            const res = await fetch("/api/items");
+            const data = await res.json();
+            setItems(data);
+          } catch (e) {
+            setError("Failed to load items from API.");
+          } finally {
+            setLoading(false);
+          }
+        }
+
+        function handleChange(e) {
+          const { name, value } = e.target;
+          setForm((prev) => ({ ...prev, [name]: value }));
+        }
+
+        async function handleSubmit(e) {
+          e.preventDefault();
+          if (!form.title.trim()) {
+            setError("Title is required.");
+            return;
+          }
+          setSaving(true);
+          setError("");
+          const payload = {
+            title: form.title.trim(),
+            description: form.description.trim(),
+            completed: !!form.completed,
+          };
+          try {
+            let res;
+            if (activeId) {
+              res = await fetch("/api/items/" + activeId, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              });
+            } else {
+              res = await fetch("/api/items", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              });
+            }
+            if (!res.ok) {
+              throw new Error("Request failed");
+            }
+            await fetchItems();
+            resetForm();
+          } catch (e) {
+            setError("Failed to save item.");
+          } finally {
+            setSaving(false);
+          }
+        }
+
+        function resetForm() {
+          setActiveId(null);
+          setForm({ title: "", description: "", completed: false });
+        }
+
+        function handleSelect(item) {
+          setActiveId(item._id);
+          setForm({
+            title: item.title || "",
+            description: item.description || "",
+            completed: !!item.completed,
+          });
+        }
+
+        async function handleToggleComplete(item, e) {
+          e.stopPropagation();
+          setSaving(true);
+          setError("");
+          try {
+            const res = await fetch("/api/items/" + item._id, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                ...item,
+                completed: !item.completed,
+              }),
+            });
+            if (!res.ok) throw new Error("Toggle failed");
+            await fetchItems();
+          } catch (e) {
+            setError("Failed to toggle item.");
+          } finally {
+            setSaving(false);
+          }
+        }
+
+        async function handleDelete(id, e) {
+          e.stopPropagation();
+          if (!confirm("Delete this item?")) return;
+          setSaving(true);
+          setError("");
+          try {
+            const res = await fetch("/api/items/" + id, { method: "DELETE" });
+            if (!res.ok) throw new Error("Delete failed");
+            await fetchItems();
+            if (activeId === id) resetForm();
+          } catch (e) {
+            setError("Failed to delete item.");
+          } finally {
+            setSaving(false);
+          }
+        }
+
+        return React.createElement(
+          "div",
+          { className: "app" },
+          React.createElement(
+            "div",
+            { className: "app-header" },
+            React.createElement(
+              "div",
+              null,
+              React.createElement(
+                "div",
+                { className: "app-title" },
+                "MERN Pipeline CRUD",
+                React.createElement("span", { className: "badge" }, "Full Stack")
+              ),
+              React.createElement(
+                "div",
+                { className: "app-subtitle" },
+                "Create, update and delete tasks backed by MongoDB."
+              )
+            ),
+            React.createElement(
+              "div",
+              { className: "status" },
+              React.createElement("span", { className: "status-dot" }),
+              React.createElement("span", null, "Live API")
+            )
+          ),
+          React.createElement(
+            "div",
+            { className: "app-grid" },
+            React.createElement(
+              "div",
+              { className: "card" },
+              React.createElement(
+                "div",
+                { className: "card-header" },
+                React.createElement(
+                  "div",
+                  null,
+                  React.createElement(
+                    "div",
+                    { className: "card-title" },
+                    activeId ? "Edit item" : "New item"
+                  ),
+                  React.createElement(
+                    "div",
+                    { style: { fontSize: 11, color: "#9ca3af", marginTop: 2 } },
+                    "Changes are persisted in MongoDB."
+                  )
+                ),
+                React.createElement("span", { className: "pill" }, "Form")
+              ),
+              React.createElement(
+                "form",
+                { onSubmit: handleSubmit },
+                React.createElement(
+                  "div",
+                  { style: { marginBottom: 10 } },
+                  React.createElement(
+                    "div",
+                    { className: "field-label" },
+                    "Title",
+                    React.createElement(
+                      "span",
+                      { style: { color: "#fca5a5" } },
+                      " *"
+                    )
+                  ),
+                  React.createElement("input", {
+                    name: "title",
+                    placeholder: "Ship the next feature...",
+                    value: form.title,
+                    onChange: handleChange,
+                  })
+                ),
+                React.createElement(
+                  "div",
+                  { style: { marginBottom: 10 } },
+                  React.createElement(
+                    "div",
+                    { className: "field-label" },
+                    "Description"
+                  ),
+                  React.createElement("textarea", {
+                    name: "description",
+                    placeholder: "Add a bit more context for your task.",
+                    value: form.description,
+                    onChange: handleChange,
+                  })
+                ),
+                React.createElement(
+                  "div",
+                  { className: "chip-row" },
+                  React.createElement(
+                    "div",
+                    { className: "chip" },
+                    "Mode: ",
+                    activeId ? "Edit existing" : "Create new"
+                  ),
+                  saving &&
+                    React.createElement(
+                      "div",
+                      { className: "loading" },
+                      React.createElement("span", {
+                        className: "loading-dot",
+                      }),
+                      "Saving..."
+                    )
+                ),
+                React.createElement(
+                  "div",
+                  { className: "toolbar" },
+                  activeId &&
+                    React.createElement(
+                      "button",
+                      {
+                        type: "button",
+                        className: "btn btn-ghost",
+                        onClick: resetForm,
+                      },
+                      "Clear"
+                    ),
+                  React.createElement(
+                    "button",
+                    {
+                      type: "submit",
+                      className: "btn btn-primary",
+                      disabled: saving,
+                    },
+                    activeId ? "Update item" : "Add item"
+                  )
+                ),
+                error &&
+                  React.createElement("div", { className: "error" }, error)
+              )
+            ),
+            React.createElement(
+              "div",
+              { className: "card" },
+              React.createElement(
+                "div",
+                { className: "card-header" },
+                React.createElement(
+                  "div",
+                  null,
+                  React.createElement(
+                    "div",
+                    { className: "card-title" },
+                    "Items"
+                  ),
+                  React.createElement(
+                    "div",
+                    {
+                      style: {
+                        fontSize: 11,
+                        color: "#9ca3af",
+                        marginTop: 2,
+                      },
+                    },
+                    "Tap a row to edit, or use quick actions."
+                  )
+                ),
+                React.createElement("span", { className: "pill" }, "MongoDB")
+              ),
+              React.createElement(
+                "div",
+                { className: "list" },
+                loading &&
+                  React.createElement(
+                    "div",
+                    { className: "list-empty" },
+                    "Loading items..."
+                  ),
+                !loading && items.length === 0 &&
+                  React.createElement(
+                    "div",
+                    { className: "list-empty" },
+                    "No items yet. Add your first task on the left."
+                  ),
+                !loading &&
+                  items.map(function (item) {
+                    const active = item._id === activeId;
+                    const created = new Date(item.createdAt || Date.now());
+                    const updated = new Date(item.updatedAt || created);
+                    return React.createElement(
+                      "div",
+                      {
+                        key: item._id,
+                        className:
+                          "item-row" + (active ? " active" : ""),
+                        onClick: function () {
+                          handleSelect(item);
+                        },
+                      },
+                      React.createElement(
+                        "div",
+                        { className: "item-main" },
+                        React.createElement(
+                          "div",
+                          {
+                            className:
+                              "item-title" +
+                              (item.completed ? " completed" : ""),
+                          },
+                          item.title
+                        ),
+                        item.description &&
+                          React.createElement(
+                            "div",
+                            { className: "item-desc" },
+                            item.description
+                          ),
+                        React.createElement(
+                          "div",
+                          { className: "item-tags" },
+                          React.createElement(
+                            "span",
+                            {
+                              className:
+                                "tag " +
+                                (item.completed
+                                  ? "tag-success"
+                                  : "tag-pending"),
+                            },
+                            item.completed ? "Completed" : "Pending"
+                          )
+                        ),
+                        React.createElement(
+                          "div",
+                          { className: "item-meta" },
+                          React.createElement(
+                            "span",
+                            null,
+                            "Created ",
+                            created.toLocaleDateString(),
+                            " ",
+                            created.toLocaleTimeString()
+                          ),
+                          React.createElement(
+                            "span",
+                            null,
+                            "Updated ",
+                            updated.toLocaleDateString(),
+                            " ",
+                            updated.toLocaleTimeString()
+                          )
+                        )
+                      ),
+                      React.createElement(
+                        "div",
+                        { className: "item-actions" },
+                        React.createElement(
+                          "button",
+                          {
+                            type: "button",
+                            className: "btn btn-ghost btn-icon",
+                            onClick: function (e) {
+                              handleToggleComplete(item, e);
+                            },
+                          },
+                          item.completed ? "Reopen" : "Done"
+                        ),
+                        React.createElement(
+                          "button",
+                          {
+                            type: "button",
+                            className: "btn btn-ghost btn-icon",
+                            onClick: function (e) {
+                              handleDelete(item._id, e);
+                            },
+                          },
+                          "Delete"
+                        )
+                      )
+                    );
+                  })
+              )
+            )
+          )
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(React.createElement(App));
+    </script>
+  </body>
+</html>
+

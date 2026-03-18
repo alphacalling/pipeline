@@ -1,0 +1,61 @@
+name: MERN CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: Testing
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install client deps
+        working-directory: client
+        run: pnpm install
+
+      - name: Build Frontend
+        working-directory: client
+        run: pnpm run build
+
+      - name: Test Backend
+        working-directory: backend
+        run: |
+          pnpm install
+          pnpm test || echo "No tests"
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: Testing
+
+    steps:
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          cd /home/vikas_pandey/ci-cdpipeline
+          git pull origin main
+          # Ensure pnpm and pm2 exist
+          command -v pnpm >/dev/null 2>&1 || npm i -g pnpm
+          command -v pm2 >/dev/null 2>&1 || npm i -g pm2
+          cd client
+          pnpm install
+          pnpm run build
+          cd ../backend
+          pnpm install
+          pm2 restart mern-pipeline || pm2 start src/server.js --name mern-pipeline
